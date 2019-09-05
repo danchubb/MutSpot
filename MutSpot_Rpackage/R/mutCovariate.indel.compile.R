@@ -110,7 +110,7 @@ files = Sys.glob(paste(chrom.dir, "mutCovariate_indel_chr*.RDS", sep = ""))
 # Tabulate covariates for mutations
 mut.freq = parallel::mclapply(files, FUN = function(x) readRDS(x)[[1]], mc.cores = cores)
 
-mut.freq = data.table::rbindlist(mut.freq)
+mut.freq = data.table::rbindlist(mut.freq,fill=TRUE)
 mut.freq = data.frame(mut.freq, check.names = F)
 mutfreq.aggregated = aggregate(mut.freq$freq, by = mut.freq[ ,colnames(mut.freq) != "freq"], FUN = sum)
 mutfreq.aggregated = data.table::setDT(mutfreq.aggregated)
